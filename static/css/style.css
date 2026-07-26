@@ -1,0 +1,198 @@
+@import url("sidebar.css");
+@import url("topbar.css");
+@import url("cards.css");
+@import url("charts.css");
+@import url("responsive.css");
+@import url("upload.css");
+
+/* ==========================
+   GLOBAL
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#F8FAFC;
+
+    color:#111827;
+
+    overflow-x:hidden;
+
+}
+
+/* Links */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+/* Buttons */
+
+button{
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+/* Images */
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
+}
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:30px;
+
+    margin-bottom:35px;
+
+    padding:35px;
+
+    background:linear-gradient(135deg,#EEF2FF,#FFFFFF);
+
+    border-radius:24px;
+
+    border:1px solid rgba(79,70,229,.08);
+
+    box-shadow:0 12px 30px rgba(15,23,42,.06);
+
+}
+
+.hero-text h1{
+
+    font-size:36px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin:10px 0;
+
+}
+
+.hero-text p{
+
+    color:#6B7280;
+
+    font-size:16px;
+
+}
+
+.username{
+
+    color:#4F46E5;
+
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    background:#EDE9FE;
+
+    color:#4F46E5;
+
+    padding:8px 16px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   IMPORT BUTTON
+========================== */
+
+.import-btn{
+
+    border:none;
+
+    background:linear-gradient(135deg,#4F46E5,#7C3AED);
+
+    color:white;
+
+    padding:16px 28px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    box-shadow:0 15px 30px rgba(79,70,229,.25);
+
+}
+
+.import-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 40px rgba(79,70,229,.35);
+
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#4F46E5;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EEF2FF;
+
+}
