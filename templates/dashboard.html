@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO ================= -->
+
+<div class="hero">
+
+    <div class="hero-text">
+
+        <span class="hero-badge">
+            Smart Retail Analytics
+        </span>
+
+        <h1>
+            Good Morning,
+            <span class="username">Priya Gupta</span> 👋
+        </h1>
+
+        <p>
+            Welcome back! Your dashboard is connected to
+            <strong>{{ dataset_name }}</strong>.
+        </p>
+
+    </div>
+
+    <form action="{{ url_for('upload_dataset') }}"
+          method="POST"
+          enctype="multipart/form-data"
+          class="upload-form">
+
+        <input
+            type="file"
+            name="dataset"
+            id="datasetInput"
+            accept=".csv"
+            hidden
+            onchange="this.form.submit()">
+
+        <button
+            type="button"
+            class="import-btn"
+            onclick="document.getElementById('datasetInput').click()">
+
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            Change Dataset
+
+        </button>
+
+    </form>
+
+</div>
+
+<!-- ================= KPI CARDS ================= -->
+
+<div class="cards">
+
+    <div class="card">
+
+        <span class="live-badge">LIVE</span>
+
+        <div class="card-icon blue">
+            <i class="fa-solid fa-sack-dollar"></i>
+        </div>
+
+        <h5>Total Sales</h5>
+
+        <h2>${{ "{:,.0f}".format(total_sales) }}</h2>
+
+        <span class="positive">Live Data</span>
+
+        <p>Overall Revenue</p>
+
+    </div>
+
+    <div class="card">
+
+        <span class="live-badge">LIVE</span>
+
+        <div class="card-icon green">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <h5>Total Profit</h5>
+
+        <h2>${{ "{:,.0f}".format(total_profit) }}</h2>
+
+        <span class="positive">Live Data</span>
+
+        <p>Net Profit</p>
+
+    </div>
+
+    <div class="card">
+
+        <span class="live-badge">LIVE</span>
+
+        <div class="card-icon orange">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+
+        <h5>Total Orders</h5>
+
+        <h2>{{ total_orders }}</h2>
+
+        <span class="positive">Live Data</span>
+
+        <p>Orders Processed</p>
+
+    </div>
+
+    <div class="card">
+
+        <span class="live-badge">LIVE</span>
+
+        <div class="card-icon purple">
+            <i class="fa-solid fa-users"></i>
+        </div>
+
+        <h5>Total Customers</h5>
+
+        <h2>{{ total_customers }}</h2>
+
+        <span class="positive">Live Data</span>
+
+        <p>Unique Customers</p>
+
+    </div>
+
+    <div class="card">
+
+        <span class="live-badge">LIVE</span>
+
+        <div class="card-icon blue">
+            <i class="fa-solid fa-box"></i>
+        </div>
+
+        <h5>Quantity Sold</h5>
+
+        <h2>{{ total_quantity }}</h2>
+
+        <span class="positive">Live Data</span>
+
+        <p>Total Units Sold</p>
+
+    </div>
+
+</div>
+
+<!-- ================= CHARTS ================= -->
+
+<div class="dashboard-grid">
+
+    <!-- Monthly Sales -->
+
+    <div class="chart-card">
+
+        <div class="card-header">
+
+            <h3>📈 Monthly Sales Trend</h3>
+
+            <span>Jan - Dec</span>
+
+        </div>
+
+        <canvas id="salesChart"></canvas>
+
+    </div>
+
+    <!-- Category Sales -->
+
+    <div class="chart-card">
+
+        <div class="card-header">
+
+            <h3>🥧 Sales by Category</h3>
+
+        </div>
+
+        <canvas id="categoryChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- ================= AI INSIGHTS ================= -->
+
+<div class="insight-card">
+
+    <div class="card-header">
+
+        <h3>🤖 AI Business Insights</h3>
+
+    </div>
+
+    <ul>
+
+        <li>✔ Dataset loaded successfully.</li>
+
+        <li>✔ KPIs update automatically after dataset upload.</li>
+
+        <li>✔ Charts are generated dynamically using Pandas.</li>
+
+        <li>✔ Ready for Forecasting & Reports Module.</li>
+
+    </ul>
+
+</div>
+
+<!-- ================= Chart.js ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const salesCtx = document.getElementById("salesChart");
+
+if(salesCtx){
+
+new Chart(salesCtx,{
+
+type:"line",
+
+data:{
+labels:{{ sales_labels|tojson }},
+
+datasets:[{
+
+label:"Sales",
+
+data:{{ sales_values|tojson }},
+
+borderColor:"#4F46E5",
+
+backgroundColor:"rgba(79,70,229,.15)",
+
+fill:true,
+
+tension:.4
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{display:false}
+
+}
+
+}
+
+});
+
+}
+
+const categoryCtx=document.getElementById("categoryChart");
+
+if(categoryCtx){
+
+new Chart(categoryCtx,{
+
+type:"doughnut",
+
+data:{
+
+labels:{{ category_labels|tojson }},
+
+datasets:[{
+
+data:{{ category_values|tojson }},
+
+backgroundColor:[
+
+"#4F46E5",
+
+"#10B981",
+
+"#F59E0B",
+
+"#EF4444",
+
+"#06B6D4"
+
+]
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+position:"bottom"
+
+}
+
+}
+
+}
+
+});
+
+}
+
+</script>
+
+{% endblock %}

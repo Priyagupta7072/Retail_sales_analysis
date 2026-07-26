@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+{% block page_title %}Analytics{% endblock %}
+
+{% block content %}
+
+<div class="hero">
+
+    <div class="hero-text">
+
+        <span class="hero-badge">
+            Advanced Business Analytics
+        </span>
+
+        <h1>
+            Sales Analytics Dashboard 📊
+        </h1>
+
+        <p>
+            Analyze sales performance, regional trends, category profit,
+            top products and customer insights.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ===================== CHARTS ===================== -->
+
+<div class="dashboard-grid">
+
+    <div class="chart-card">
+
+        <div class="card-header">
+
+            <h3>🌍 Region-wise Sales</h3>
+
+        </div>
+
+        <canvas id="regionChart" height="120"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <div class="card-header">
+
+            <h3>💰 Category Profit</h3>
+
+        </div>
+
+        <canvas id="profitChart" height="120"></canvas>
+
+    </div>
+
+</div>
+
+<!-- ===================== TABLES ===================== -->
+
+<div class="dashboard-grid">
+
+    <div class="chart-card">
+
+        <div class="card-header">
+
+            <h3>🏆 Top 10 Products</h3>
+
+        </div>
+
+        <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+
+                    <th>Sales</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for product in products %}
+
+                <tr>
+
+                    <td>{{ product.product_name }}</td>
+
+                    <td>${{ "{:,.0f}".format(product.sales) }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="chart-card">
+
+        <div class="card-header">
+
+            <h3>👥 Top 10 Customers</h3>
+
+        </div>
+
+        <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>Customer</th>
+
+                    <th>Sales</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for customer in customers %}
+
+                <tr>
+
+                    <td>{{ customer.customer_name }}</td>
+
+                    <td>${{ "{:,.0f}".format(customer.sales) }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ===================== CHART JS ===================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// ================= REGION SALES =================
+
+new Chart(document.getElementById("regionChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: {{ region_labels | tojson }},
+
+        datasets: [{
+
+            label: "Sales",
+
+            data: {{ region_values | tojson }},
+
+            backgroundColor: [
+                "#4F46E5",
+                "#2563EB",
+                "#06B6D4",
+                "#10B981",
+                "#F59E0B",
+                "#EF4444"
+            ],
+
+            borderRadius:10
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        plugins:{
+            legend:{
+                display:false
+            }
+        },
+
+        scales:{
+            y:{
+                beginAtZero:true
+            }
+        }
+
+    }
+
+});
+
+
+// ================= CATEGORY PROFIT =================
+
+new Chart(document.getElementById("profitChart"), {
+
+    type:"doughnut",
+
+    data:{
+
+        labels: {{ category_labels | tojson }},
+
+        datasets:[{
+
+            data: {{ category_values | tojson }},
+
+            backgroundColor:[
+                "#4F46E5",
+                "#10B981",
+                "#F59E0B",
+                "#EF4444",
+                "#06B6D4",
+                "#8B5CF6"
+            ],
+
+            hoverOffset:8
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        cutout:"70%",
+
+        plugins:{
+
+            legend:{
+                position:"bottom"
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}
